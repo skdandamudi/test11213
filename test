@@ -1,0 +1,17 @@
+resource "kubectl_manifest" "felix_config" {
+  yaml_body = <<-YAML
+    apiVersion: crd.projectcalico.org/v1
+    kind: FelixConfiguration
+    metadata:
+      name: default
+    spec:
+      awsSrcDstCheck: Disable
+      bpfLogLevel: ""
+      floatingIPs: Disabled
+      healthPort: 9099
+      logSeverityScreen: Info
+      reportingInterval: 0s
+  YAML
+
+  depends_on = [helm_release.calico]
+}
